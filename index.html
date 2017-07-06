@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Table leg</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/style.css"> <!-- CSS styles -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+
+</head>
+<body>
+	<header id="header" class="clearfix">
+		<div class="wrapper">
+			<div id="hero-wrapper">
+				<div id="hero" class="responsive-image"></div>				
+			</div>
+			<h1>Every Table Needs a Leg</h1>			
+		</div>
+	</header>
+	<div class="wrapper main">
+		<section id="content">
+			<!-- render into here -->
+		</section> 
+	</div>	
+	<div id="footer">
+		<div class="wrapper">
+		</div>
+	</div>
+
+	<!-- Templates -->
+	<script id="story-template" type="text/x-handlebars-template">
+		<div class="story-block clearfix">
+			{{#if photo_url}}
+				<a target="_blank" href="{{ story_url }}">
+					<img class="thumbnail" src="{{photo_url}}">
+				</a>
+			{{/if}}
+			<a target="_blank" href="{{ story_url }}"><h1>{{ headline }}</h1></a>
+			{{#if dek}}
+				<p>{{ dek }}</p>
+			{{/if}}
+		</div> 
+	</script>
+
+
+<script src='/js/lib/handlebars-v4.0.10.js'></script>
+<script src='/js/lib/tabletop.min.js'></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
