@@ -4,40 +4,100 @@ jQuery(document).ready(function($){
 	 *	  Load content from Google Spreadsheet
 	 */
 
-	var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/12Gtjc00RaSKo7cYYiYks9yxL7ptwnThH9EYzOvOpVgs/pubhtml';
+	var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1zebMHnAg70aV108IHhBhW3EQy2VC6H5wcyJkTAl8y7s/pubhtml?gid=822481562&single=true';
 
 	function init() {
 	Tabletop.init( { key: publicSpreadsheetUrl,
-	                 callback: showInfo,
+	                 callback: processInfo,
 	                 simpleSheet: true } )
 	}
 
 	function showInfo(data, tabletop) {
 	 	// uncomment to view your data in the console!
-	 	// console.log('red hot data:');
-		// console.log(tabletop.foundSheetNames);
-		var settings = tabletop.sheets('Settings');
-		var stories = tabletop.sheets('Stories');
-	    // console.log('settings:');
-	    // console.log(settings.elements[0].hero_image_url);
-	    // console.log('stories:');
-	    // console.log(stories.elements);
-
-	    // set hero image 
-	    var bgURL = 'url("' + settings.elements[0].hero_image_url + '")';
-	    $('#hero').css('background-image', bgURL);
+	 	console.log('red hot data:');
+		console.log(tabletop.foundSheetNames);
+		// var settings = tabletop.sheets('Settings');
+		var results = tabletop.sheets('Form_Results');
+	    console.log('results:');
+	    console.log(results.elements);
 
 	    // Handlebars templating
 	    var source = $('#story-template').html();
 	    var template = Handlebars.compile(source);
-	    stories.elements.forEach( function(story) {
-		    var render = template(story);
+	    results.elements.forEach( function(result) {
+		    var render = template(result);
 	    	// append to timeline container
 	    	$('#content').append(render);
 	    });
-
 	}
 
+	function chartRender(labelsArray, dataArray) {
+		// render the chart
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: labelsArray,
+		        datasets: [{
+		            label: '# of Votes',
+		            data: dataArray,
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.5)',
+		                'rgba(54, 162, 235, 0.5)',
+		                'rgba(255, 206, 86, 0.5)',
+		                'rgba(75, 192, 192, 0.5)',
+		                'rgba(153, 102, 255, 0.5)',
+		                'rgba(255, 159, 64, 0.5)'
+		            ],
+		            // borderColor: [
+		            //     'rgba(255,99,132,1)',
+		            //     'rgba(54, 162, 235, 1)',
+		            //     'rgba(255, 206, 86, 1)',
+		            //     'rgba(75, 192, 192, 1)',
+		            //     'rgba(153, 102, 255, 1)',
+		            //     'rgba(255, 159, 64, 1)'
+		            // ],
+		            // borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+	}
+
+	function processInfo(data, tabletop) {
+	 	// uncomment to view your data in the console!
+		var results = tabletop.sheets('Form_Results');
+	    console.log('results:');
+	    console.log(results);
+
+	    var labels = [];
+	    var data = [];
+		
+		// iterate through spreadsheet rows to build our arrays 
+		results.elements.forEach( function(result) {
+		    console.log('element:')
+		    console.log(result)
+	    	labels.push(result.question);
+	    	data.push(result.result);
+	    });
+
+		// render the chart and send it data
+	    chartRender(labels, data);
+	}
+
+
+
 	window.addEventListener('DOMContentLoaded', init);
+
+	setInterval(function(){ init(); }, 10000);
+
 
 });
