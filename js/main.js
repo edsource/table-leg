@@ -75,7 +75,7 @@ jQuery(document).ready(function($){
 		    console.log('element:')
 		    console.log(result)
 	    	labels.push(result.question);
-	    	data.push(result.result);
+	    	data.push(result.percent);
 	    });
 
 		// render the chart and send it data
