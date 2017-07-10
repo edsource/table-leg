@@ -23,12 +23,12 @@ jQuery(document).ready(function($){
 		            label: '# of Votes',
 		            data: dataArray,
 		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.5)',
-		                'rgba(54, 162, 235, 0.5)',
-		                'rgba(255, 206, 86, 0.5)',
-		                'rgba(75, 192, 192, 0.5)',
-		                'rgba(153, 102, 255, 0.5)',
-		                'rgba(255, 159, 64, 0.5)'
+		                'rgba(255, 99, 132, 0.7)',
+		                'rgba(54, 162, 235, 0.7)',
+		                'rgba(255, 206, 86, 0.7)',
+		                'rgba(75, 192, 192, 0.7)',
+		                'rgba(153, 102, 255, 0.7)',
+		                'rgba(255, 159, 64, 0.7)'
 		            ],
 		            // borderColor: [
 		            //     'rgba(255,99,132,1)',
@@ -63,7 +63,7 @@ jQuery(document).ready(function($){
 	    // empty arrays to collect our data for Charts.js
 	    var labels = [];
 	    var data = [];
-				
+
 		// iterate through spreadsheet rows to build our arrays 
 		results.elements.forEach( function(result) {
 		    console.log('element:')
