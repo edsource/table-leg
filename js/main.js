@@ -42,11 +42,14 @@ jQuery(document).ready(function($){
 		        }]
 		    },
 		    options: {
-		    	gridLines: {
-		    		display: false
-		    	},
 		        scales: {
+		            xAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }],
 		            yAxes: [{
+		            	stacked: true,
 		                ticks: {
 		                    beginAtZero:true
 		                }
