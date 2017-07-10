@@ -12,25 +12,6 @@ jQuery(document).ready(function($){
 	                 simpleSheet: true } )
 	}
 
-	function showInfo(data, tabletop) {
-	 	// uncomment to view your data in the console!
-	 	console.log('red hot data:');
-		console.log(tabletop.foundSheetNames);
-		// var settings = tabletop.sheets('Settings');
-		var results = tabletop.sheets('Form_Results');
-	    console.log('results:');
-	    console.log(results.elements);
-
-	    // Handlebars templating
-	    var source = $('#story-template').html();
-	    var template = Handlebars.compile(source);
-	    results.elements.forEach( function(result) {
-		    var render = template(result);
-	    	// append to timeline container
-	    	$('#content').append(render);
-	    });
-	}
-
 	function chartRender(labelsArray, dataArray) {
 		// render the chart
 		var ctx = document.getElementById("myChart");
@@ -72,15 +53,17 @@ jQuery(document).ready(function($){
 		});
 	}
 
+	// processInfo is our Tabletop callback to run when data is ready
 	function processInfo(data, tabletop) {
 	 	// uncomment to view your data in the console!
 		var results = tabletop.sheets('Form_Results');
 	    console.log('results:');
 	    console.log(results);
 
+	    // empty arrays to collect our data for Charts.js
 	    var labels = [];
 	    var data = [];
-		
+				
 		// iterate through spreadsheet rows to build our arrays 
 		results.elements.forEach( function(result) {
 		    console.log('element:')
@@ -91,13 +74,14 @@ jQuery(document).ready(function($){
 
 		// render the chart and send it data
 	    chartRender(labels, data);
+
 	}
 
-
+	init();
 
 	window.addEventListener('DOMContentLoaded', init);
 
-	setInterval(function(){ init(); }, 10000);
+	// setInterval(function(){ init(); }, 10000);
 
 
 });
