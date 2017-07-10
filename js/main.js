@@ -16,7 +16,7 @@ jQuery(document).ready(function($){
 		// render the chart
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, {
-		    type: 'bar',
+		    type: 'horizontalBar',
 		    data: {
 		        labels: labelsArray,
 		        datasets: [{
@@ -42,6 +42,9 @@ jQuery(document).ready(function($){
 		        }]
 		    },
 		    options: {
+		    	gridLines: {
+		    		display: false
+		    	},
 		        scales: {
 		            yAxes: [{
 		                ticks: {
@@ -77,7 +80,6 @@ jQuery(document).ready(function($){
 
 	}
 
-	init();
 
 	window.addEventListener('DOMContentLoaded', init);
 
