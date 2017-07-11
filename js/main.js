@@ -12,24 +12,23 @@ jQuery(document).ready(function($){
 	                 simpleSheet: true } )
 	}
 
+
+
 	function chartRender(labelsArray, dataArray) {
-		// render the chart
-		var ctx = document.getElementById("myChart");
-		var myChart = new Chart(ctx, {
-		    type: 'horizontalBar',
-		    data: {
-		        labels: labelsArray,
+        
+        var chartData = {
+                labels: labelsArray,
 		        datasets: [{
-		            label: '% of Votes',
+		            label: 'Percentage of Votes',
 		            data: dataArray,
 		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.7)',
-		                'rgba(54, 162, 235, 0.7)',
-		                'rgba(255, 206, 86, 0.7)',
-		                'rgba(75, 192, 192, 0.7)',
-		                'rgba(153, 102, 255, 0.7)',
-		                'rgba(255, 159, 64, 0.7)'
-		            ],
+		                'rgba(255, 99, 132, 0.5)',
+		                'rgba(54, 162, 235, 0.5)',
+		                'rgba(255, 206, 86, 0.5)',
+		                'rgba(75, 192, 192, 0.5)',
+		                'rgba(153, 102, 255, 0.5)',
+		                'rgba(255, 159, 64, 0.5)'
+		            ]
 		            // borderColor: [
 		            //     'rgba(255,99,132,1)',
 		            //     'rgba(54, 162, 235, 1)',
@@ -40,9 +39,11 @@ jQuery(document).ready(function($){
 		            // ],
 		            // borderWidth: 1
 		        }]
-		    },
-		    options: {
-		        scales: {
+        };
+        
+        var barOptions = {
+            
+              scales: {
                     xAxes:[{
                         gridLines: {
                     color: "rgba(0, 0, 0, 0)",
@@ -50,6 +51,7 @@ jQuery(document).ready(function($){
                      display: false,
                     ticks: {
                         beginAtZero:true
+                     
                     }
                     }],
 		            yAxes: [{
@@ -59,24 +61,53 @@ jQuery(document).ready(function($){
                 },
 		                ticks: {
 		                    beginAtZero:true
+                            
 		                }
 		            }]
-		        }
-		    }
+		        },
+           events: false,
+	animation: {
+ 
+    onComplete: function () {
+        var ctx = this.chart.ctx;
+        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'bottom';
+        
+        this.data.datasets.forEach(function (dataset) {
+            console.log(dataset);
+            for (var i = 0; i < dataset.data.length; i++) {
+                console.log(dataset._meta[Object.keys(dataset._meta)[0]].data[0]._model);
+                
+                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                   
+                ctx.fillText(dataset.data[i] + "%", model.x + 5, model.y + 5);
+            }
+        });               
+    }
+	}
+        };
+        
+        
+        
+		// render the chart
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		   type: 'horizontalBar',
+            data: chartData,
+            options: barOptions
 		});
 	}
 
-	// processInfo is our Tabletop callback to run when data is ready
 	function processInfo(data, tabletop) {
 	 	// uncomment to view your data in the console!
 		var results = tabletop.sheets('Form_Results');
 	    console.log('results:');
 	    console.log(results);
 
-	    // empty arrays to collect our data for Charts.js
 	    var labels = [];
 	    var data = [];
-
+		
 		// iterate through spreadsheet rows to build our arrays 
 		results.elements.forEach( function(result) {
 		    console.log('element:')
@@ -87,13 +118,13 @@ jQuery(document).ready(function($){
 
 		// render the chart and send it data
 	    chartRender(labels, data);
-
 	}
+
 
 
 	window.addEventListener('DOMContentLoaded', init);
 
-	// setInterval(function(){ init(); }, 10000);
+	//setInterval(function(){ init(); }, 10000);
 
 
 });
