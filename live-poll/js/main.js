@@ -42,22 +42,25 @@ jQuery(document).ready(function($){
         };
         
         var barOptions = {
-            
+            legend: {
+            position: 'right'
+            },
               scales: {
                     xAxes:[{
                         gridLines: {
-                    color: "rgba(0, 0, 0, 0)",
+                    color: "rgba(0, 0, 0, 0)"
                 },
                      display: false,
                     ticks: {
                         beginAtZero:true
+                     
                     }
                     }],
 		            yAxes: [{
                         stacked: true,
                         gridLines: {
-                    color: "rgba(0, 0, 0, 0)",
-                },
+                    display: false
+                },      
 		                ticks: {
 		                    beginAtZero:true
 		                }
