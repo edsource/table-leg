@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
 		    data: {
 		        labels: labelsArray,
 		        datasets: [{
-		            label: '# of Votes',
+		            label: '% of Votes',
 		            data: dataArray,
 		            backgroundColor: [
 		                'rgba(255, 99, 132, 0.7)',
@@ -49,8 +49,7 @@ jQuery(document).ready(function($){
                 },
                      display: false,
                     ticks: {
-                        beginAtZero:true,
-                        max:100
+                        beginAtZero:true
                     }
                     }],
 		            yAxes: [{
