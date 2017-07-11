@@ -51,7 +51,6 @@ jQuery(document).ready(function($){
                      display: false,
                     ticks: {
                         beginAtZero:true
-                     
                     }
                     }],
 		            yAxes: [{
@@ -61,7 +60,6 @@ jQuery(document).ready(function($){
                 },
 		                ticks: {
 		                    beginAtZero:true
-                            
 		                }
 		            }]
 		        },
@@ -97,6 +95,7 @@ jQuery(document).ready(function($){
             data: chartData,
             options: barOptions
 		});
+        
 	}
 
 	function processInfo(data, tabletop) {
