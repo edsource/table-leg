@@ -15,6 +15,7 @@ jQuery(document).ready(function($){
 
 
 	function chartRender(labelsArray, dataArray) {
+      
         
         var chartData = {
                 labels: labelsArray,
@@ -89,15 +90,29 @@ jQuery(document).ready(function($){
 	}
         };
         
+    
+          var config = {
+            type: 'horizontalBar',
+            data: chartData,
+            options: barOptions
+        };
         
+        console.log(config.data.labels);
         
 		// render the chart
 		var ctx = document.getElementById("myChart");
-		var myChart = new Chart(ctx, {
-		   type: 'horizontalBar',
-            data: chartData,
-            options: barOptions
-		});
+		var myChart = new Chart(ctx, config);
+        
+        setTimeout(function addData(){
+           
+	config.data.labels.push("Test");
+            config.data.datasets[0].data.push(3);
+//    config.data.datasets.forEach((dataset) => {
+//        dataset.data.push(3);
+//    });
+            
+  myChart.update();
+}, 1000);
         
 	}
 
