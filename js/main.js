@@ -43,13 +43,21 @@ jQuery(document).ready(function($){
 		    },
 		    options: {
 		        scales: {
-		            xAxes: [{
-		                ticks: {
-		                    beginAtZero:true
-		                }
-		            }],
+                    xAxes:[{
+                        gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                },
+                     display: false,
+                    ticks: {
+                        beginAtZero:true,
+                        max:100
+                    }
+                    }],
 		            yAxes: [{
-		            	stacked: true,
+                        stacked: true,
+                        gridLines: {
+                    color: "rgba(0, 0, 0, 0)",
+                },
 		                ticks: {
 		                    beginAtZero:true
 		                }
@@ -75,7 +83,7 @@ jQuery(document).ready(function($){
 		    console.log('element:')
 		    console.log(result)
 	    	labels.push(result.question);
-	    	data.push(result.result);
+	    	data.push(result.percent);
 	    });
 
 		// render the chart and send it data
