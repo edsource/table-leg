@@ -13,9 +13,7 @@ jQuery(document).ready(function($){
 	}
 
 
-
 	function chartRender(labelsArray, dataArray) {
-      
         
         var chartData = {
                 labels: labelsArray,
@@ -46,52 +44,51 @@ jQuery(document).ready(function($){
             legend: {
             position: 'right'
             },
-              scales: {
-                    xAxes:[{
-                        gridLines: {
-                    color: "rgba(0, 0, 0, 0)"
-                },
-                     display: false,
-                    ticks: {
-                        beginAtZero:true
-                     
-                    }
-                    }],
+            scales: {
+                xAxes:[{
+                    gridLines: {
+	                color: "rgba(0, 0, 0, 0)"
+	            },
+	                 display: false,
+	                ticks: {
+	                    beginAtZero:true
+	                 
+	                }
+	                }],
 		            yAxes: [{
-                        stacked: true,
-                        gridLines: {
-                    display: false
-                },      
-		                ticks: {
+	                    stacked: true,
+	                    gridLines: {
+	                display: false
+	            },      
+		            ticks: {
 		                    beginAtZero:true
 		                }
-		            }]
-		        },
-           events: false,
-	animation: {
- 
-    onComplete: function () {
-        var ctx = this.chart.ctx;
-        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'bottom';
-        
-        this.data.datasets.forEach(function (dataset) {
-            console.log(dataset);
-            for (var i = 0; i < dataset.data.length; i++) {
-                console.log(dataset._meta[Object.keys(dataset._meta)[0]].data[0]._model);
-                
-                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                   
-                ctx.fillText(dataset.data[i] + "%", model.x + 5, model.y + 5);
-            }
-        });               
-    }
-	}
+		        }]
+	        },
+            events: false,
+			animation: {
+
+			onComplete: function () {
+			    var ctx = this.chart.ctx;
+			    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+			    ctx.textAlign = 'left';
+			    ctx.textBaseline = 'bottom';
+			    
+			    this.data.datasets.forEach(function (dataset) {
+			        // console.log(dataset);
+			        for (var i = 0; i < dataset.data.length; i++) {
+			            console.log(dataset._meta[Object.keys(dataset._meta)[0]].data[0]._model);
+			            
+			            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+			               
+			            ctx.fillText(dataset.data[i] + "%", model.x + 5, model.y + 5);
+			        }
+			    });               
+			}
+			}
         };
         
-    
-          var config = {
+        var config = {
             type: 'horizontalBar',
             data: chartData,
             options: barOptions
@@ -103,16 +100,11 @@ jQuery(document).ready(function($){
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, config);
         
-        setTimeout(function addData(){
+        setInterval(function(){
            
-	config.data.labels.push("Test");
-            config.data.datasets[0].data.push(3);
-//    config.data.datasets.forEach((dataset) => {
-//        dataset.data.push(3);
-//    });
-            
-  myChart.update();
-}, 1000);
+    
+		  myChart.update();
+		}, 6000);
         
 	}
 
