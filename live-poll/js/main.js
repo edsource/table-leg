@@ -7,11 +7,19 @@ jQuery(document).ready(function($){
 	var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1zebMHnAg70aV108IHhBhW3EQy2VC6H5wcyJkTAl8y7s/pubhtml?gid=822481562&single=true';
 
 	function init() {
-	Tabletop.init( { key: publicSpreadsheetUrl,
+		Tabletop.init( { key: publicSpreadsheetUrl,
 	                 callback: processInfo,
 	                 simpleSheet: true } )
 	}
 
+	function refresh() {
+		Tabletop.init( { key: publicSpreadsheetUrl,
+	                 	callback: updateData,
+		                 simpleSheet: true } )
+		function updateData(data, tabletop) {
+			window.polledResults = tabletop.sheets('Form_Results');
+		}
+	}
 
 	function chartRender(labelsArray, dataArray) {
         
@@ -77,7 +85,7 @@ jQuery(document).ready(function($){
 			    this.data.datasets.forEach(function (dataset) {
 			        // console.log(dataset);
 			        for (var i = 0; i < dataset.data.length; i++) {
-			            console.log(dataset._meta[Object.keys(dataset._meta)[0]].data[0]._model);
+			            // console.log(dataset._meta[Object.keys(dataset._meta)[0]].data[0]._model);
 			            
 			            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
 			               
@@ -99,17 +107,37 @@ jQuery(document).ready(function($){
 		// render the chart
 		var ctx = document.getElementById("myChart");
 		var myChart = new Chart(ctx, config);
-        
-        setInterval(function(){
-           
-    
-		  myChart.update();
-		}, 6000);
-        
+
+	 	// kick off interval
+		 window.updateInterval = setInterval(function(){ 
+
+		 	// refresh data with new call to Tabletop
+		 	refresh();
+		 	// grab results from the global variable set by refresh
+			var freshResults = window.polledResults;
+
+			if (freshResults != undefined) {
+				// loop through spreadsheet rows to build new array for data 
+				var newDataValues = [];
+				freshResults.elements.forEach( function(result) {
+			    	newDataValues.push(result.percent);
+			    });				
+				// loop through dataset to update values       
+        		for (i=0; i<myChart.data.datasets[0].data.length; i++) {
+        			myChart.data.datasets[0].data[i] = newDataValues[i];
+        		}
+        		// update the chart
+        		myChart.update();
+           } 
+
+       }, 10000);     
+
 	}
+
 
 	function processInfo(data, tabletop) {
 	 	// uncomment to view your data in the console!
+	 	window.tabletop = tabletop;
 		var results = tabletop.sheets('Form_Results');
 	    console.log('results:');
 	    console.log(results);
@@ -119,8 +147,8 @@ jQuery(document).ready(function($){
 		
 		// iterate through spreadsheet rows to build our arrays 
 		results.elements.forEach( function(result) {
-		    console.log('element:')
-		    console.log(result)
+		    // console.log('element:')
+		    // console.log(result)
 	    	labels.push(result.question);
 	    	data.push(result.percent);
 	    });
@@ -130,10 +158,13 @@ jQuery(document).ready(function($){
 	}
 
 
-
 	window.addEventListener('DOMContentLoaded', init);
 
-	//setInterval(function(){ init(); }, 10000);
+	document.getElementById('end').addEventListener('click', function(){
+		console.log('foofie');
+		clearInterval(window.updateInterval);
+	});
 
+	//setInterval(function(){ init(); }, 10000);
 
 });
