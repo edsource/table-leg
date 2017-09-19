@@ -20,6 +20,9 @@ jQuery(document).ready(function($){
 			window.polledResults = tabletop.sheets('Form_Results');
 		}
 	}
+	Chart.defaults.global.defaultFontFamily = 'proxima-nova-condensed';
+	Chart.defaults.global.defaultFontSize = 20;
+	Chart.defaults.global.defaultFontColor = '#363636';
 
 	function chartRender(labelsArray, dataArray) {
         
@@ -50,7 +53,8 @@ jQuery(document).ready(function($){
         
         var barOptions = {
             legend: {
-            position: 'right'
+            	display: false
+	            // position: 'right'
             },
             scales: {
                 xAxes:[{
@@ -130,7 +134,7 @@ jQuery(document).ready(function($){
         		myChart.update();
            } 
 
-       }, 10000);     
+       }, 6000);    // edit this value to change frequency of update 
 
 	}
 
@@ -158,10 +162,23 @@ jQuery(document).ready(function($){
 	}
 
 
-	window.addEventListener('DOMContentLoaded', init);
+	// window.addEventListener('DOMContentLoaded', init);
+
+	$('#pollControl').on('click', function(){
+		if ( $(this).hasClass('inactive') ) {
+			$(this).removeClass('inactive').addClass('active');
+			$(this).text('End live poll');
+			// initialize poll
+			init();
+		} else if ( $(this).hasClass('active') ) {
+			$(this).removeClass('active').addClass('inactive');
+			$(this).text('Begin live poll');
+			// deactivate poll
+			clearInterval(window.updateInterval);
+		}
+	});
 
 	document.getElementById('end').addEventListener('click', function(){
-		console.log('foofie');
 		clearInterval(window.updateInterval);
 	});
 

@@ -5,9 +5,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Table leg</title>
+	<title>Live Poll</title>
 
 	<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<!-- typekit fonts -->
+	<script src="https://use.typekit.net/fcp3ivz.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
 	<link rel="stylesheet" href="css/style.css"> <!-- CSS styles -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
@@ -16,15 +19,16 @@
 <body>
 	<header id="header" class="clearfix">
 		<div class="wrapper">
-			<h1>Live Poll: EdSource Topics </h1>			
+			<h1>Live Poll: EdSource Topics </h1>
+			<p>To vote, visit http://bit.do/2017livepoll</p>			
 		</div>
 	</header>
 	<div class="wrapper main">
 		<section id="content">
 			<!-- render into here -->
 		</section> 
-		<canvas id="myChart" width="600" height="300"></canvas>
-		<button id="end">Conclude live poll</button>
+		<canvas id="myChart" width="600" height="300" style="padding: 20px;"></canvas>
+		<button id="pollControl" class="inactive">Begin live poll</button>
 	</div>	
 	<div id="footer">
 		<div class="wrapper">
